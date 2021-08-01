@@ -30,6 +30,7 @@ public class CurrencyConversionController {
 			) {
 				logger.info("Got Request from {} to {} quantity {}", from, to, quantity);
 		CurrencyConversionDto dto = service.calculateCurrencyConversion(from, to, quantity);	
+		logger.info("Sending Back Calculated Result  from {} to {} for quantity {} is {}", from, to , dto.getQuantity(), dto.getTotalCalculatedAmount());
 		return dto;
 	}
 }

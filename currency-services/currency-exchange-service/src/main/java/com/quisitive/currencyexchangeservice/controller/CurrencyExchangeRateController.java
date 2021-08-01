@@ -27,12 +27,13 @@ public class CurrencyExchangeRateController {
 	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public CurrencyExchangeRateDto getExchangeRateValue(@PathVariable String from, @PathVariable String to) {
-		logger.info("Got Request from {} to {} quantity {}", from, to);
+		logger.info("Got Request from {} to {}", from, to);
 		CurrencyExchangeRateDto exchangeRateValue = service.getExchangeRateValue(from, to);
 		if(exchangeRateValue ==null) {
 			throw new RuntimeException
 				("Unable to Find data for " + from + " to " + to);
 		}
+		logger.info("Sending Back Exchange Rate from  {} to {} is {}", from, to , exchangeRateValue.getConversionMultiple());
 		return exchangeRateValue;
 	}
 	

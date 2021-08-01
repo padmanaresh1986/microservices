@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.quisitive.currencyconversionservice.dto.CurrencyExchangeRateDto;
 
-//@FeignClient(name="currency-exchange", url="localhost:8000")
+
+//@FeignClient(name="currency-exchange", url="https://springcloud1-currency-exchange-service.azuremicroservices.io")
 @FeignClient(name="currency-exchange")
 public interface CurrencyExchangeRateProxy {
 	
