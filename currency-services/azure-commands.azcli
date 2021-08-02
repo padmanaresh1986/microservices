@@ -13,8 +13,11 @@ az spring-cloud app logs  -n currency-conversion-service -s springcloud1 -g spri
 
 az spring-cloud app logs  -n currency-exchange-service -s springcloud1 -g spring-cloud --lines 3000 
 
+az spring-cloud 
+
 az login
 az account get-access-token
 
-curl --header "Authorization: Bearer {Token} https://springcloud1.svc.azuremicroservices.io/eureka/actuator/
+
+#curl --header "Authorization: Bearer {Token} https://springcloud1.svc.azuremicroservices.io/eureka/actuator/
 
