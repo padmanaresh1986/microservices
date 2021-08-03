@@ -8,7 +8,7 @@ import com.quisitive.currencyconversionservice.dto.CurrencyExchangeRateDto;
 
 
 //@FeignClient(name="currency-exchange", url="https://springcloud1-currency-exchange-service.azuremicroservices.io")
-@FeignClient(name="currency-exchange")
+@FeignClient(name="currency-exchange-service")
 public interface CurrencyExchangeRateProxy {
 	
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
