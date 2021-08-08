@@ -13,12 +13,12 @@ public class ApiGatewayConfig {
 	@Bean
 	public RouteLocator gatewayRouter(RouteLocatorBuilder builder) {
 		return builder.routes()
-				.route(req -> req.path("/currency-conversion/**").filters(f -> f
+				.route(req -> req.path("/currency-conversion-service/**").filters(f -> f
 						.addRequestHeader("myHeader", "myHeaderValue").addRequestParameter("myParam", "myParamValue"))
-						.uri("lb://currency-conversion"))
-				.route(req -> req.path("/currency-exchange/**").filters(f -> f
+						.uri("lb://currency-conversion-service"))
+				.route(req -> req.path("/currency-exchange-service/**").filters(f -> f
 						.addRequestHeader("myHeader", "myHeaderValue").addRequestParameter("myParam", "myParamValue"))
-						.uri("lb://currency-exchange"))
+						.uri("lb://currency-exchange-service"))
 				.build();
 	}
 	

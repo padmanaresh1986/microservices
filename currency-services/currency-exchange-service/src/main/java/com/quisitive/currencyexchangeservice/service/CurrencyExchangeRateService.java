@@ -44,9 +44,15 @@ public class CurrencyExchangeRateService {
 	
 	public CurrencyExchangeRateDto save(CurrencyExchangeRateDto dto) {
 		CurrencyExchangeRateEntity entity = repository
-				.save(new CurrencyExchangeRateEntity(dto.getId(), dto.getFrom(), dto.getTo(), dto.getConversionMultiple()));
+				.save(new CurrencyExchangeRateEntity(dto.getFrom(), dto.getTo(), dto.getConversionMultiple()));
 		return new CurrencyExchangeRateDto(entity.getId(), entity.getFrom(), entity.getTo(),
 				entity.getConversionMultiple());
+	}
+
+
+	public Boolean deleteAll() {
+		repository.deleteAll();
+		return true;
 	}
 	
 	

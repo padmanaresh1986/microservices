@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 public class CurrencyExchangeRateEntity {
 
 	@Id
+	@GeneratedValue
 	private Long id;
 	
 	@Column(name = "currency_from")
@@ -28,9 +30,8 @@ public class CurrencyExchangeRateEntity {
 		super();
 	}
 
-	public CurrencyExchangeRateEntity(Long id, String from, String to, BigDecimal conversionMultiple) {
+	public CurrencyExchangeRateEntity(String from, String to, BigDecimal conversionMultiple) {
 		super();
-		this.id = id;
 		this.from = from;
 		this.to = to;
 		this.conversionMultiple = conversionMultiple;

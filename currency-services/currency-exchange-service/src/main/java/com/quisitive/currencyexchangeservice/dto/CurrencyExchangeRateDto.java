@@ -45,4 +45,11 @@ public class CurrencyExchangeRateDto {
 		this.conversionMultiple = conversionMultiple;
 	}
 	
+	@Override
+	public String toString() {
+		return "CurrencyExchangeRateDto [id=" + id + ", from=" + from + ", to=" + to + ", conversionMultiple="
+				+ conversionMultiple + "]";
+	}
+	
+	
 }
