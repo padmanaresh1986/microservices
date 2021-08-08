@@ -22,7 +22,7 @@ public class CurrencyConversionController {
 		this.service = service;
 	}
 
-	@GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
+	@GetMapping("/convert/from/{from}/to/{to}/quantity/{quantity}")
 	public CurrencyConversionDto calculateCurrencyConversion(
 			@PathVariable String from,
 			@PathVariable String to,

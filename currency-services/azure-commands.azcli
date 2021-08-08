@@ -1,22 +1,28 @@
-az spring-cloud app create -n naming-server -s springcloud1 -g spring-cloud --assign-endpoint true --runtime-version=Java_11  	 	
-
-az spring-cloud app deploy -n naming-server -s springcloud1 -g spring-cloud --jar-path C:\git\microservices\currency-services\naming-server\target\naming-server-0.0.1-SNAPSHOT.jar
-
-
-az spring-cloud app create -n currency-exchange-service -s springcloud1 -g spring-cloud --assign-endpoint true --runtime-version=Java_11
-az spring-cloud app deploy -n currency-exchange-service -s springcloud1 -g spring-cloud --jar-path C:\git\microservices\currency-services\currency-exchange-service\target\currency-exchange-service-0.0.1-SNAPSHOT.jar
-
-az spring-cloud app create -n currency-conversion-service -s springcloud1 -g spring-cloud --assign-endpoint true --runtime-version=Java_11
-az spring-cloud app deploy -n currency-conversion-service -s springcloud1 -g spring-cloud --jar-path C:\git\microservices\currency-services\currency-conversion-service\target\currency-conversion-service-0.0.1-SNAPSHOT.jar
-
-az spring-cloud app logs  -n currency-conversion-service -s springcloud1 -g spring-cloud --lines 2000 
-
-az spring-cloud app logs  -n currency-exchange-service -s springcloud1 -g spring-cloud --lines 3000 
-
-az spring-cloud 
 
 az login
 az account get-access-token
+# springcloud1 subscription
+az spring-cloud app create -n currency-exchange-service -s springcloud1 -g spring-cloud --assign-endpoint true --runtime-version=Java_11
+az spring-cloud app deploy -n currency-exchange-service -s springcloud1 -g spring-cloud --jar-path C:\git\microservices\currency-services\currency-exchange-service\target\currency-exchange-service-0.0.3-SNAPSHOT.jar
+
+az spring-cloud app create -n currency-conversion-service -s springcloud1 -g spring-cloud --assign-endpoint true --runtime-version=Java_11
+az spring-cloud app deploy -n currency-conversion-service -s springcloud1 -g spring-cloud --jar-path C:\git\microservices\currency-services\currency-conversion-service\target\currency-conversion-service-0.0.4-SNAPSHOT.jar
+
+az spring-cloud app create -n api-gateway -s springcloud1 -g spring-cloud --assign-endpoint true --runtime-version=Java_11
+az spring-cloud app deploy -n api-gateway -s springcloud1 -g spring-cloud --jar-path C:\git\microservices\currency-services\api-gateway\target\api-gateway-0.0.1-SNAPSHOT.jar
+
+az spring-cloud app logs  -n currency-conversion-service -s springcloud1 -g spring-cloud --follow 
+az spring-cloud app logs  -n currency-exchange-service -s springcloud1 -g spring-cloud --follow
+az spring-cloud app logs  -n api-gateway -s springcloud1 -g spring-cloud --follow  
+
+#https://springcloud1-currency-exchange-service.azuremicroservices.io/currency-exchange-service/swagger-ui.html
+#https://springcloud1-api-gateway.azuremicroservices.io/currency-conversion-service/convert/from/INR/to/AED/quantity/10000000
+#https://springcloud1-currency-conversion-service.azuremicroservices.io/currency-conversion-service/swagger-ui.html
+
+# springcloud123 subscription
+az spring-cloud app create -n currency-exchange-service -s springcloud123 -g springcloud --assign-endpoint true --runtime-version=Java_11
+
+
 
 
 #curl --header "Authorization: Bearer {Token} https://springcloud1.svc.azuremicroservices.io/eureka/actuator/
@@ -24,4 +30,4 @@ az account get-access-token
 #BUILD_IN_EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=https://springcloud1.svc.azuremicroservices.io/eureka/eureka
 #BUILD_IN_SPRING_CLOUD_CONFIG_URI=https://springcloud1.svc.azuremicroservices.io/config
 
-curl --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8xYjkwOWM5MC03YjMzLTQwNjctOTc2ZS0zMWIzNWQyNWY3N2MvIiwiaWF0IjoxNjI3OTA5Mjc0LCJuYmYiOjE2Mjc5MDkyNzQsImV4cCI6MTYyNzkxMzE3NCwiYWNyIjoiMSIsImFpbyI6IkFVUUF1LzhUQUFBQWk2aUw3bDJZRDdmQXdZSTF6OGFvME1FYVIxeXM1OHNPWCtSRE5QSkZtUDN4UHR4L3V1L1RVOUFFK1cwYTJ6eTlMajllMnlLd1NtWUxCVmdPWWJuenBRPT0iLCJhbXIiOlsicHdkIiwibWZhIl0sImFwcGlkIjoiMDRiMDc3OTUtOGRkYi00NjFhLWJiZWUtMDJmOWUxYmY3YjQ2IiwiYXBwaWRhY3IiOiIwIiwiZmFtaWx5X25hbWUiOiJNb3R1cGFsbGkiLCJnaXZlbl9uYW1lIjoiUGFkbWEgTmFyZXNoIiwiZ3JvdXBzIjpbIjVjNWIxMTU2LTg3Y2YtNDI1Ni04OThlLTBlMjQxZDNmZjUyNSIsIjc5MDRjMDE5LTBiNzktNDNlOC04OGQ1LTIxMmRhMTZlM2U2ZiJdLCJpcGFkZHIiOiIxODMuODMuMTQzLjE5MyIsIm5hbWUiOiJQYWRtYSBOYXJlc2ggTW90dXBhbGxpIiwib2lkIjoiNzZkMmEzMmYtODFjYi00OTBhLWFiZjgtZTNmYjQ5ZWM0OTkwIiwicHVpZCI6IjEwMDM3RkZFQTE3NUFCOTEiLCJyaCI6IjAuQVZnQWtKeVFHek43WjBDWGJqR3pYU1gzZkpWM3NBVGJqUnBHdS00Qy1lR19lMFpZQUFzLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6InM2RXhyLXNTVW90RjJCQmNkSEFNMFMydU10Yzk5dFRxeE55US13S1pCUWciLCJ0aWQiOiIxYjkwOWM5MC03YjMzLTQwNjctOTc2ZS0zMWIzNWQyNWY3N2MiLCJ1bmlxdWVfbmFtZSI6Im5hcmVzaG1AbWVubG8tdGVjaG5vbG9naWVzLmNvbSIsInVwbiI6Im5hcmVzaG1AbWVubG8tdGVjaG5vbG9naWVzLmNvbSIsInV0aSI6IlliM3RfU2VFNFV1ME1QMDQ1aF85QUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfdGNkdCI6MTMxNzk2MDU5OX0.cdsJ9NjoSZMx55BCyFrrhICSyKoeozFXoO8LU48Uaq_1rRBN0pG_Ic_ZKCkKLTyrFzTVjLsumWZlUEyQe9ZIA6LEFlgm3GlrttD9DwARrm1zNfxuzJ3w3M4sMhSMZNxVZZKRFiJp7pixzWcRn-8G-NLaD7WmYrhLOnoIlaGc5QqfUs-v0g5E3_qriumRFDiR9tePa1dog3bX3kZNNjzx9FtYgOR6OFwhYwimEgS5e9iF6noCkWac7ZiABVkpV_M299qU_HNnHFcjJCsfXwMNEN1H96kRnCufyeLY-GbH-s9B9iFB0npNSiV_crn5ebFIro72ZpPSmf4j9soplqxGQw https://springcloud1.svc.azuremicroservices.io/eureka/actuator/
+#curl --header "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyIsImtpZCI6Im5PbzNaRHJPRFhFSzFqS1doWHNsSFJfS1hFZyJ9.eyJhdWQiOiJodHRwczovL21hbmFnZW1lbnQuY29yZS53aW5kb3dzLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8xYjkwOWM5MC03YjMzLTQwNjctOTc2ZS0zMWIzNWQyNWY3N2MvIiwiaWF0IjoxNjI3OTA5Mjc0LCJuYmYiOjE2Mjc5MDkyNzQsImV4cCI6MTYyNzkxMzE3NCwiYWNyIjoiMSIsImFpbyI6IkFVUUF1LzhUQUFBQWk2aUw3bDJZRDdmQXdZSTF6OGFvME1FYVIxeXM1OHNPWCtSRE5QSkZtUDN4UHR4L3V1L1RVOUFFK1cwYTJ6eTlMajllMnlLd1NtWUxCVmdPWWJuenBRPT0iLCJhbXIiOlsicHdkIiwibWZhIl0sImFwcGlkIjoiMDRiMDc3OTUtOGRkYi00NjFhLWJiZWUtMDJmOWUxYmY3YjQ2IiwiYXBwaWRhY3IiOiIwIiwiZmFtaWx5X25hbWUiOiJNb3R1cGFsbGkiLCJnaXZlbl9uYW1lIjoiUGFkbWEgTmFyZXNoIiwiZ3JvdXBzIjpbIjVjNWIxMTU2LTg3Y2YtNDI1Ni04OThlLTBlMjQxZDNmZjUyNSIsIjc5MDRjMDE5LTBiNzktNDNlOC04OGQ1LTIxMmRhMTZlM2U2ZiJdLCJpcGFkZHIiOiIxODMuODMuMTQzLjE5MyIsIm5hbWUiOiJQYWRtYSBOYXJlc2ggTW90dXBhbGxpIiwib2lkIjoiNzZkMmEzMmYtODFjYi00OTBhLWFiZjgtZTNmYjQ5ZWM0OTkwIiwicHVpZCI6IjEwMDM3RkZFQTE3NUFCOTEiLCJyaCI6IjAuQVZnQWtKeVFHek43WjBDWGJqR3pYU1gzZkpWM3NBVGJqUnBHdS00Qy1lR19lMFpZQUFzLiIsInNjcCI6InVzZXJfaW1wZXJzb25hdGlvbiIsInN1YiI6InM2RXhyLXNTVW90RjJCQmNkSEFNMFMydU10Yzk5dFRxeE55US13S1pCUWciLCJ0aWQiOiIxYjkwOWM5MC03YjMzLTQwNjctOTc2ZS0zMWIzNWQyNWY3N2MiLCJ1bmlxdWVfbmFtZSI6Im5hcmVzaG1AbWVubG8tdGVjaG5vbG9naWVzLmNvbSIsInVwbiI6Im5hcmVzaG1AbWVubG8tdGVjaG5vbG9naWVzLmNvbSIsInV0aSI6IlliM3RfU2VFNFV1ME1QMDQ1aF85QUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfdGNkdCI6MTMxNzk2MDU5OX0.cdsJ9NjoSZMx55BCyFrrhICSyKoeozFXoO8LU48Uaq_1rRBN0pG_Ic_ZKCkKLTyrFzTVjLsumWZlUEyQe9ZIA6LEFlgm3GlrttD9DwARrm1zNfxuzJ3w3M4sMhSMZNxVZZKRFiJp7pixzWcRn-8G-NLaD7WmYrhLOnoIlaGc5QqfUs-v0g5E3_qriumRFDiR9tePa1dog3bX3kZNNjzx9FtYgOR6OFwhYwimEgS5e9iF6noCkWac7ZiABVkpV_M299qU_HNnHFcjJCsfXwMNEN1H96kRnCufyeLY-GbH-s9B9iFB0npNSiV_crn5ebFIro72ZpPSmf4j9soplqxGQw https://springcloud1.svc.azuremicroservices.io/eureka/actuator/
