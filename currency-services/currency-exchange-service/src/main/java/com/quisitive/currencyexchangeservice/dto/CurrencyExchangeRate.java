@@ -2,17 +2,32 @@ package com.quisitive.currencyexchangeservice.dto;
 
 import java.math.BigDecimal;
 
-public class CurrencyExchangeRateDto {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
+import org.hibernate.validator.constraints.Length;
+
+
+public class CurrencyExchangeRate {
 	private Long id;
+	
+	@NotNull
+	@Length(min = 3,max = 3)
 	private String from;
+	
+	@NotNull
+	@Length(min = 3,max = 3)
 	private String to;
+	
+	@NotNull
+	@Positive
 	private BigDecimal conversionMultiple;
 	
 	
-	public CurrencyExchangeRateDto() {
+	public CurrencyExchangeRate() {
 		super();
 	}
-	public CurrencyExchangeRateDto(Long id, String from, String to, BigDecimal conversionMultiple) {
+	public CurrencyExchangeRate(Long id, String from, String to, BigDecimal conversionMultiple) {
 		super();
 		this.id = id;
 		this.from = from;
