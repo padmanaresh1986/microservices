@@ -1,8 +1,11 @@
 package com.quisitive.currencyexchangeservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.quisitive.currencyexchangeservice.filter.SwaggerFilter;
 
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -19,6 +22,14 @@ public class SwaggerConfig {
 	@Bean
 	public Docket api(){
 		return new Docket(DocumentationType.SWAGGER_2);
+	}
+	
+	@Bean
+	public FilterRegistrationBean<SwaggerFilter> swaggerFilter() {
+	    FilterRegistrationBean<SwaggerFilter> registrationBean = new FilterRegistrationBean<>();
+	    registrationBean.setFilter(new SwaggerFilter());
+	    registrationBean.addUrlPatterns("/v2/api-docs");
+	    return registrationBean;
 	}
 
 }
